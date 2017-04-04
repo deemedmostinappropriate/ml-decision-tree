@@ -2,8 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by aidandoak on 3/04/17.
@@ -13,7 +12,7 @@ public class InstanceSet {
     public int numAtts;
     public List<String> categoryNames;
     public List<String> attNames;
-    public List<Instance> allInstances;
+    public Set<Instance> allInstances;
 
 
     public void readDataFile(String fname){
@@ -48,9 +47,9 @@ public class InstanceSet {
     }
 
 
-    private List<Instance> readInstances(BufferedReader reader){
+    private Set<Instance> readInstances(BufferedReader reader){
     /* instance = classname and space separated attribute values */
-        List<Instance> instances = new ArrayList<Instance>();
+        Set<Instance> instances = new HashSet<Instance>();
 
         try {
             String line = reader.readLine();
@@ -80,14 +79,14 @@ public class InstanceSet {
     public class Instance {
 
         private int category;
-        private List<Boolean> vals;
+        private Map<Integer,Boolean> vals;
 
         public Instance(int cat, boolean[] values){
             category = cat;
-            vals = new ArrayList<Boolean>();
+            vals = new TreeMap<Integer, Boolean>();
 
             for(int i = 0; i < values.length; ++i)
-                vals.add(values[i]);
+                vals.put(i,values[i]);
         }
 
         public boolean getAtt(int index){
@@ -101,7 +100,7 @@ public class InstanceSet {
         public String toString(){
             StringBuilder ans = new StringBuilder(categoryNames.get(category));
             ans.append(" ");
-            for (Boolean val : vals)
+            for (Boolean val : vals.values())
                 ans.append(val?"true  ":"false ");
             return ans.toString();
         }

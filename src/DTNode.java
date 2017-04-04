@@ -8,11 +8,17 @@ import java.io.*;
  */
 public class DTNode {
     /** An instance class from the data file. */
-    public String classification;
+    public int classification;
+
+    public double probability;
 
     /* The left and right nodes of the decision tree */
-    public DTNode left;
-    public DTNode right;
+    public DTNode left = null;
+    public DTNode right = null;
 
+    public Set<InstanceSet.Instance> instances;
 
+    public void add(InstanceSet.Instance i){
+        instances.add(i);
+    }
 }
